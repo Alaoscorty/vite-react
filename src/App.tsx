@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import AuthenticationLogin from './pages/AuthenticationLogin';
 import AuthenticationRegister from './pages/AuthenticationRegister';
@@ -18,10 +18,10 @@ import Chat from './pages/Chat';
 import ParrainerPage from './pages/ParrainerPage';
 
 function App() {
-  const [count, setCount] = useState(0);
   return (
     <BrowserRouter>
       <Routes>
+        {/* Routes publiques */}
         <Route path="/" element={<HomePage />} />
         <Route path="/AuthenticationLogin" element={<AuthenticationLogin />} />
         <Route path="/AuthenticationRegister" element={<AuthenticationRegister />} />
@@ -38,15 +38,18 @@ function App() {
         <Route path="/commandes" element={<CommandePage />} />
         <Route path="/Crypto" element={<CryptoPage />} />
 
-        {/* 🔐 Page protégée */}
+        {/* 🔐 Routes privées */}
         <Route
-          path="/HomePage"
+          path="/home" // Tu peux changer le nom de cette route pour mieux correspondre à ton application
           element={
             <PrivateRoute>
               <HomePage />
             </PrivateRoute>
           }
         />
+        
+        {/* Redirection en cas de page non trouvée */}
+        <Route path="*" element={<Navigate to="/" />} /> {/* Redirection vers la page d'accueil */}
       </Routes>
     </BrowserRouter>
   );
