@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -65,4 +65,20 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+.product-card { 
+  transition: 0.3s; 
+  border-radius: 10px; 
+  overflow: hidden; 
+  height: 100vh;
+}
+.product-card img { 
+  border-top-left-radius: 10px;
+   border-top-right-radius: 10px; 
+   height: 45vh;
+  }
+.product-card:hover { 
+  transform: scale(1.05); 
+  margin-bottom: 1vh;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
 }
