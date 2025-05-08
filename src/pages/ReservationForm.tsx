@@ -28,21 +28,33 @@ export default function ReservationForm() {
 
   const validateForm = () => {
     const phoneRegex = /^[0-9]{10}$/;
+    const currentDate = new Date().toISOString().split('T')[0]; // Date actuelle au format YYYY-MM-DD
+
+    // Validation du téléphone
     if (!phoneRegex.test(formData.telephoneClient)) {
       setError('Le numéro de téléphone doit contenir exactement 10 chiffres.');
       return false;
     }
 
+    // Validation du nombre de personnes
     if (parseInt(formData.nombrePersonnes, 10) < 1) {
       setError('Le nombre de personnes doit être d\'au moins 1.');
       return false;
     }
 
+    // Validation des heures
     if (formData.heureDebut >= formData.heureFin) {
       setError('L\'heure de fin doit être après l\'heure de début.');
       return false;
     }
 
+    // Validation de la date
+    if (formData.dateReservation < currentDate) {
+      setError('La date de réservation doit être dans le futur.');
+      return false;
+    }
+
+    // Validation de la raison
     if (!formData.raisonReservation) {
       setError('Veuillez sélectionner une raison de réservation.');
       return false;
@@ -102,6 +114,7 @@ export default function ReservationForm() {
                   value={formData.nomClient}
                   onChange={handleChange}
                   required
+                  aria-describedby="nomClientHelp"
                 />
               </div>
 
@@ -115,6 +128,7 @@ export default function ReservationForm() {
                   value={formData.telephoneClient}
                   onChange={handleChange}
                   required
+                  aria-describedby="telephoneClientHelp"
                 />
               </div>
 

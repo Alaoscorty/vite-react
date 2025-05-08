@@ -82,3 +82,7 @@ button:focus-visible {
   margin-bottom: 1vh;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
 }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
