@@ -9,31 +9,31 @@ export default function ProposPage() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false); // État pour l'indicateur de chargement
-  const [error, setError] = useState(""); // État pour les erreurs
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleChange = (e) => {
+  // ✅ Typage étendu pour supporter input + textarea
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  // ✅ Typage correct pour la soumission de formulaire
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(""); // Réinitialise l'erreur au début de la soumission
+    setError("");
 
-    // Validation basique de l'email
     if (!/\S+@\S+\.\S+/.test(formData.email)) {
       setError("Veuillez entrer une adresse email valide.");
       return;
     }
 
-    setLoading(true); // Affiche l'indicateur de chargement
+    setLoading(true);
 
-    // Simuler une requête d'API (peut être remplacée par une vraie API)
     try {
-      // TODO: Remplacer par un appel API pour soumettre le formulaire
       console.log("Formulaire soumis :", formData);
-      
-      // Simuler un délai pour la soumission
+
       setTimeout(() => {
         setSubmitted(true);
         setFormData({
@@ -47,7 +47,7 @@ export default function ProposPage() {
       console.error("Erreur lors de l'envoi du formulaire", error);
       setError("Une erreur s'est produite. Veuillez réessayer.");
     } finally {
-      setLoading(false); // Cache l'indicateur de chargement
+      setLoading(false);
       setTimeout(() => setSubmitted(false), 4000);
     }
   };
@@ -121,7 +121,7 @@ export default function ProposPage() {
               className="form-control"
               id="message"
               name="message"
-              rows="5"
+              rows={5}
               value={formData.message}
               onChange={handleChange}
               required

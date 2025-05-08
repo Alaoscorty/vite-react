@@ -7,22 +7,27 @@ import { useAuth } from '../contexts/Authcontexts';
 export default function ReservationForm() {
   const { user } = useAuth();
 
+  // Si user est undefined ou null, on peut afficher un message d'erreur.
+  if (!user) {
+    return <div>Veuillez vous connecter pour faire une réservation.</div>;
+  }
+
   const [formData, setFormData] = useState({
-    nomClient: user?.name || '',
+    nomClient: user.name || '',
     telephoneClient: '',
     nombrePersonnes: '',
     dateReservation: '',
     heureDebut: '',
     heureFin: '',
     raisonReservation: '', // ✅ Nouvelle propriété
-    userId: user?.id || '', // Pour lier la réservation à l'utilisateur
+    userId: user.id || '', // Pour lier la réservation à l'utilisateur
   });
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -64,7 +69,7 @@ export default function ReservationForm() {
     return true;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateForm()) return;
 
@@ -76,14 +81,14 @@ export default function ReservationForm() {
       await createReservation(formData);
       setMessage('Réservation enregistrée avec succès ✅');
       setFormData({
-        nomClient: user?.name || '',
+        nomClient: user.name || '',
         telephoneClient: '',
         nombrePersonnes: '',
         dateReservation: '',
         heureDebut: '',
         heureFin: '',
         raisonReservation: '',
-        userId: user?.id || '',
+        userId: user.id || '',
       });
     } catch (err) {
       setError("Votre réservation n'a pas pu être enregistrée. Veuillez réessayer plus tard ou contacter un agent.");

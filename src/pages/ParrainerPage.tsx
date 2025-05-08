@@ -1,25 +1,25 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { useAuth } from '../contexts/Authcontexts';
-import { useHistory } from 'react-router-dom'; // Si tu utilises React Router pour la navigation
+import { useNavigate } from 'react-router-dom'; // Remplacer useHistory par useNavigate
 
 export default function ParrainagePage() {
   const { user } = useAuth(); // Récupération de l'utilisateur connecté
   const [referralLink, setReferralLink] = useState('');
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false); // Pour gérer l'erreur de copie
-  const history = useHistory(); // Pour rediriger l'utilisateur s'il n'est pas connecté
+  const navigate = useNavigate(); // Utiliser useNavigate à la place de useHistory
 
   useEffect(() => {
     if (user) {
       const baseUrl = window.location.origin;
-      const link = `${baseUrl}/register?ref=${user.username}`;
+      const link = `${baseUrl}/register?ref=${user.username}`; // S'assurer que 'username' existe sur l'objet user
       setReferralLink(link);
     } else {
       // Si l'utilisateur n'est pas connecté, redirige vers la page de connexion
-      history.push('/login');
+      navigate('/login'); // Utiliser navigate pour rediriger
     }
-  }, [user, history]);
+  }, [user, navigate]);
 
   const handleCopy = async () => {
     try {

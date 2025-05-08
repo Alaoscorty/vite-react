@@ -4,17 +4,29 @@ import Loader from '../components/Loader';
 import Layout from "../components/Layout";
 import { useAuth } from '../contexts/Authcontexts';
 
+interface Reservation {
+  nomClient: string;
+  telephoneClient: string;
+  dateReservation: string;
+  heureDebut: string;
+  heureFin: string;
+  nombrePersonnes: number;
+  raison?: string; // raison est optionnelle
+}
+
 export default function RecapReservation() {
   const { user } = useAuth();
-  const [reservations, setReservations] = useState([]);
+  const [reservations, setReservations] = useState<Reservation[]>([]); // Typage du tableau
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const response = await getUserReservations(user.id);
-        setReservations(response.data);
+        if (user?.id) {
+          const response = await getUserReservations(user.id);
+          setReservations(response.data);
+        }
       } catch (err) {
         console.error('Erreur lors du chargement des réservations', err);
         setError("Impossible de récupérer vos réservations. Veuillez réessayer plus tard.");

@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
-
-// 👕 Interface pour un produit
-export interface Produit {
-  id: number;
-  nom: string;
-  prix: number;
-  description: string;
-  image: string;
-}
+import { Produit } from "../types/produit"; // Assurez-vous que 'Produit' est correctement importé
 
 interface ProduitsDisponiblesProps {
   onAjouterProduit?: (produit: Produit) => void;
@@ -161,4 +153,3 @@ export default function ProduitsDisponibles({ onAjouterProduit }: ProduitsDispon
     </Layout>
   );
 }
-

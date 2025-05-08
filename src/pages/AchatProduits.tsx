@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ProduitsDisponibles from "../pages/ProduitsDisponibles";
 import { useNavigate } from "react-router-dom";
+import { Produit } from "../types/produit"; // Importation de 'Produit'
 
-// 👉 Typage d'un produit (à adapter à ta vraie structure)
+// 👉 Typage d'un produit (ici on utilise la même interface partout)
 interface Produit {
-  id: string;
+  id: string;  // Assurez-vous que les deux types utilisent le même type pour `id`
   nom: string;
   prix: number;
-  // Ajoute ici les autres propriétés du produit si besoin
+  // Ajoutez d'autres propriétés si nécessaire
 }
 
 export default function AchatProduits() {
-  const [panier, setPanier] = useState<Produit[]>([]);
+  const [panier, setPanier] = useState<Produit[]>([]); // Utiliser l'interface Produit
   const navigate = useNavigate();
 
   const ajouterProduit = (produit: Produit) => {

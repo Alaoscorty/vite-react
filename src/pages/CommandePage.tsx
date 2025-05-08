@@ -5,7 +5,14 @@ import axios from "axios";
 
 function CommandePage() {
 
-  let [products, setProducts ] = useState([]);
+  interface Product {
+    id: number;
+    title: string;
+    price: number;
+    description: string;
+    image: string;
+  }
+  let [products, setProducts] = useState<Product[]>([]);
 
   function afficherProduit(){
     axios.get("https://fakestoreapi.com/products")
