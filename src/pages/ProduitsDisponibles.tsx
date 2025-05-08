@@ -1,8 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
 
-const produitsExemple = [
+// 👕 Interface pour un produit
+export interface Produit {
+  id: number;
+  nom: string;
+  prix: number;
+  description: string;
+  image: string;
+}
+
+interface ProduitsDisponiblesProps {
+  onAjouterProduit?: (produit: Produit) => void;
+}
+
+const produitsExemple: Produit[] = [
   {
     id: 1,
     nom: "T-shirt Alaô",
@@ -47,9 +60,9 @@ const produitsExemple = [
   },
 ];
 
-export default function ProduitsDisponibles() {
+export default function ProduitsDisponibles({ onAjouterProduit }: ProduitsDisponiblesProps) {
   const [afficherPlus, setAfficherPlus] = useState(false);
-  const [panier, setPanier] = useState([]);
+  const [panier, setPanier] = useState<Produit[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem("panierProduits");
@@ -58,19 +71,21 @@ export default function ProduitsDisponibles() {
     }
   }, []);
 
-  const ajouterProduit = (produit) => {
+  const ajouterProduit = (produit: Produit) => {
     const nouveauPanier = [...panier, produit];
     setPanier(nouveauPanier);
     localStorage.setItem("panierProduits", JSON.stringify(nouveauPanier));
+
+    if (onAjouterProduit) {
+      onAjouterProduit(produit);
+    }
   };
 
-  const produitsAffiches = afficherPlus
-    ? produitsExemple
-    : produitsExemple.slice(0, 3);
+  const produitsAffiches = afficherPlus ? produitsExemple : produitsExemple.slice(0, 3);
 
   return (
     <Layout>
-      {/* Icône panier en haut à droite */}
+      {/* Icône panier flottante */}
       <Link
         to="/recapCommande"
         className="btn btn-outline-dark position-fixed"
@@ -104,7 +119,6 @@ export default function ProduitsDisponibles() {
         )}
       </Link>
 
-      {/* Contenu de la page */}
       <div className="container mt-4">
         <h2 className="text-center">Produits disponibles</h2>
         <div className="row">
@@ -147,3 +161,4 @@ export default function ProduitsDisponibles() {
     </Layout>
   );
 }
+

@@ -1,31 +1,73 @@
+import { useState, useEffect } from "react";
 import SideBars from "../components/SideBars";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Line } from "react-chartjs-2"; // Exemple pour le graphique des ventes
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
+// Enregistrer les composants nécessaires pour Chart.js
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 function HomePage() {
+  const [selectedMonth, setSelectedMonth] = useState('1');
+  const [salesData, setSalesData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+  // Fonction de mise à jour du graphique en fonction du mois sélectionné
+  const handleMonthChange = (event) => {
+    const month = event.target.value;
+    setSelectedMonth(month);
+    // Logique pour mettre à jour les données de vente en fonction du mois
+    fetchSalesData(month);
+  };
+
+  const fetchSalesData = (month) => {
+    // Simuler une récupération des données (à remplacer par une requête API réelle)
+    const sales = {
+      "1": [10, 12, 13, 15, 14, 16, 20, 18, 17, 14, 13, 11], // Exemple de données pour Mars 2023
+      "2": [15, 17, 16, 18, 19, 20, 22, 23, 21, 19, 18, 15], // Exemple pour Avril 2023
+    };
+    setSalesData(sales[month] || []);
+  };
+
+  useEffect(() => {
+    fetchSalesData(selectedMonth); // Charger les données dès le premier rendu
+  }, [selectedMonth]);
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Ventes Mensuelles'
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
+      },
+    },
+  };
+
+  const chartData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [
+      {
+        label: 'Ventes',
+        data: salesData,
+        borderColor: 'rgba(75,192,192,1)',
+        backgroundColor: 'rgba(75,192,192,0.2)',
+        fill: true,
+      },
+    ],
+  };
+
   return (
-    <div
-      className="page-wrapper"
-      id="main-wrapper"
-      data-layout="vertical"
-      data-navbarbg="skin6"
-      data-sidebartype="full"
-      data-sidebar-position="fixed"
-      data-header-position="fixed"
-    >
-      {/* <!-- Sidebar Start --> */}
-      <SideBars/>
-      {/* <!--  Sidebar End --> */}
-      {/* <!--  Main wrapper --> */}
+    <div className="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+      <SideBars />
       <div className="body-wrapper">
-        {/* <!--  Header Start --> */}
-        <Header/>
-        {/* <!--  Header End --> */}
+        <Header />
         <div className="container-fluid">
-          {/* <!--  Row 1 --> */}
           <div className="row">
-            <div className="col-lg-8 d-flex align-items-strech">
+            <div className="col-lg-8 d-flex align-items-stretch">
               <div className="card w-100">
                 <div className="card-body">
                   <div className="d-sm-flex d-block align-items-center justify-content-between mb-9">
@@ -33,27 +75,25 @@ function HomePage() {
                       <h5 className="card-title fw-semibold">Sales Overview</h5>
                     </div>
                     <div>
-                      <select className="form-select">
+                      <select className="form-select" value={selectedMonth} onChange={handleMonthChange}>
                         <option value="1">March 2023</option>
-                        <option value="2">april 2023</option>
+                        <option value="2">April 2023</option>
                         <option value="3">May 2023</option>
                         <option value="4">June 2023</option>
                       </select>
                     </div>
                   </div>
-                  <div id="chart"></div>
+                  {/* Affichage du graphique */}
+                  <Line data={chartData} options={chartOptions} />
                 </div>
               </div>
             </div>
             <div className="col-lg-4">
               <div className="row">
                 <div className="col-lg-12">
-                  {/* <!-- Yearly Breakup --> */}
                   <div className="card overflow-hidden">
                     <div className="card-body p-4">
-                      <h5 className="card-title mb-9 fw-semibold">
-                        Yearly Breakup
-                      </h5>
+                      <h5 className="card-title mb-9 fw-semibold">Yearly Breakup</h5>
                       <div className="row align-items-center">
                         <div className="col-8">
                           <h4 className="fw-semibold mb-3">$36,358</h4>
@@ -85,15 +125,11 @@ function HomePage() {
                   </div>
                 </div>
                 <div className="col-lg-12">
-                  {/* <!-- Monthly Earnings --> */}
                   <div className="card">
                     <div className="card-body">
                       <div className="row alig n-items-start">
                         <div className="col-8">
-                          <h5 className="card-title mb-9 fw-semibold">
-                            {" "}
-                            Monthly Earnings{" "}
-                          </h5>
+                          <h5 className="card-title mb-9 fw-semibold">Monthly Earnings</h5>
                           <h4 className="fw-semibold mb-3">$6,820</h4>
                           <div className="d-flex align-items-center pb-1">
                             <span className="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
@@ -118,12 +154,11 @@ function HomePage() {
               </div>
             </div>
           </div>
-          
-          
-          <Footer/>
         </div>
+        <Footer />
       </div>
     </div>
   );
 }
+
 export default HomePage;

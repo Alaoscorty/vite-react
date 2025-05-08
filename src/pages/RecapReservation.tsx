@@ -8,6 +8,7 @@ export default function RecapReservation() {
   const { user } = useAuth();
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchReservations = async () => {
@@ -16,6 +17,7 @@ export default function RecapReservation() {
         setReservations(response.data);
       } catch (err) {
         console.error('Erreur lors du chargement des réservations', err);
+        setError("Impossible de récupérer vos réservations. Veuillez réessayer plus tard.");
       } finally {
         setLoading(false);
       }
@@ -31,9 +33,15 @@ export default function RecapReservation() {
       <div className="container mt-5">
         <h2 className="text-center text-primary mb-4">Mes réservations</h2>
 
-        {loading ? (
-          <Loader />
-        ) : reservations.length > 0 ? (
+        {loading && <Loader />}
+        
+        {error && !loading && (
+          <div className="alert alert-danger text-center">
+            {error}
+          </div>
+        )}
+
+        {reservations.length > 0 ? (
           <div className="row">
             {reservations.map((res, i) => (
               <div key={i} className="col-md-6 mb-3">
@@ -46,7 +54,9 @@ export default function RecapReservation() {
                       <strong>Heure :</strong> {res.heureDebut} - {res.heureFin}<br />
                       <strong>Nombre de personnes :</strong> {res.nombrePersonnes}<br />
                       {res.raison && (
-                        <><strong>Raison :</strong> {res.raison}<br /></>
+                        <>
+                          <strong>Raison :</strong> {res.raison}<br />
+                        </>
                       )}
                     </p>
                   </div>
@@ -54,9 +64,12 @@ export default function RecapReservation() {
               </div>
             ))}
           </div>
-        ) : (
-          <p className="text-center">Aucune réservation trouvée.</p>
-        )}
+        ) : !loading && !error ? (
+          <div className="text-center">
+            <p>Aucune réservation trouvée.</p>
+            <a href="/reservation" className="btn btn-primary">Réserver maintenant</a>
+          </div>
+        ) : null}
       </div>
     </Layout>
   );

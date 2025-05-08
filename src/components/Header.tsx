@@ -1,17 +1,35 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "../contexts/Authcontexts";
+import { useAuth } from "../contexts/Authcontexts"; // Assure-toi que le chemin est correct
+
+// Types pour les notifications et l'utilisateur
+interface Notification {
+  id: string;
+  message: string;
+  // Ajoute d'autres propriétés selon ta structure
+}
+
+interface User {
+  id: string;
+  name: string;
+  // Ajoute d'autres propriétés selon ton contexte Auth
+}
 
 function Header() {
-  const { user, isAuthenticated, logout } = useAuth(); // Ajout de logout depuis le contexte
-  const [notifications, setNotifications] = useState([]);
+  const { user, isAuthenticated, logout } = useAuth() as {
+    user: User;
+    isAuthenticated: boolean;
+    logout: () => void;
+  };
+
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const storedUser = JSON.parse(localStorage.getItem("user") || "null");
         if (!storedUser) return;
         const res = await axios.get(`/api/notifications?userId=${storedUser.id}`);
         setNotifications(res.data);
@@ -70,7 +88,10 @@ function Header() {
                   className="rounded-circle"
                 />
               </a>
-              <div className="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+              <div
+                className="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
+                aria-labelledby="drop2"
+              >
                 <div className="message-body">
                   <Link to="/recapReservation" className="dropdown-item d-flex align-items-center gap-2">
                     <i className="ti ti-user fs-6"></i>
@@ -86,7 +107,7 @@ function Header() {
                   </Link>
                   <button
                     onClick={() => {
-                      logout(); // Déconnecte proprement l’utilisateur via le contexte
+                      logout();
                       navigate("/AuthenticationLogin");
                     }}
                     className="dropdown-item d-flex align-items-center gap-2"

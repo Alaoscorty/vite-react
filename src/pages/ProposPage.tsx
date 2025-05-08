@@ -9,26 +9,47 @@ export default function ProposPage() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false); // État pour l'indicateur de chargement
+  const [error, setError] = useState(""); // État pour les erreurs
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Réinitialise l'erreur au début de la soumission
 
-    // TODO : envoyer les données vers une API si nécessaire
-    console.log("Formulaire soumis :", formData);
+    // Validation basique de l'email
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      setError("Veuillez entrer une adresse email valide.");
+      return;
+    }
 
-    setSubmitted(true);
-    setFormData({
-      nom: "",
-      email: "",
-      sujet: "",
-      message: "",
-    });
+    setLoading(true); // Affiche l'indicateur de chargement
 
-    setTimeout(() => setSubmitted(false), 4000);
+    // Simuler une requête d'API (peut être remplacée par une vraie API)
+    try {
+      // TODO: Remplacer par un appel API pour soumettre le formulaire
+      console.log("Formulaire soumis :", formData);
+      
+      // Simuler un délai pour la soumission
+      setTimeout(() => {
+        setSubmitted(true);
+        setFormData({
+          nom: "",
+          email: "",
+          sujet: "",
+          message: "",
+        });
+      }, 2000);
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du formulaire", error);
+      setError("Une erreur s'est produite. Veuillez réessayer.");
+    } finally {
+      setLoading(false); // Cache l'indicateur de chargement
+      setTimeout(() => setSubmitted(false), 4000);
+    }
   };
 
   return (
@@ -41,9 +62,16 @@ export default function ProposPage() {
         </p>
 
         <h4 className="mb-3">Contactez-nous</h4>
+
         {submitted && (
-          <div className="alert alert-success">
+          <div className="alert alert-success" aria-live="assertive">
             Votre message a été envoyé avec succès.
+          </div>
+        )}
+
+        {error && (
+          <div className="alert alert-danger" aria-live="assertive">
+            {error}
           </div>
         )}
 
@@ -100,7 +128,9 @@ export default function ProposPage() {
             ></textarea>
           </div>
 
-          <button type="submit" className="btn btn-primary">Envoyer</button>
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? "Envoi en cours..." : "Envoyer"}
+          </button>
         </form>
       </div>
     </Layout>

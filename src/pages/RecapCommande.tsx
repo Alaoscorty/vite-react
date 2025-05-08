@@ -2,21 +2,25 @@ import { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
 
+// 📦 Interface du produit
+interface Produit {
+  id: number;
+  nom: string;
+  prix: number;
+  description: string;
+  image: string;
+}
 
 export default function RecapCommande() {
-  // Récupération des produits depuis le localStorage
-  const [panier, setPanier] = useState([]);
+  const [panier, setPanier] = useState<Produit[]>([]);
 
-  // Récupérer les produits du panier depuis le localStorage au chargement du composant
   useEffect(() => {
-    const produitsPanier = JSON.parse(localStorage.getItem("panierProduits")) || [];
+    const produitsPanier = JSON.parse(localStorage.getItem("panierProduits") || "[]") as Produit[];
     setPanier(produitsPanier);
   }, []);
 
-  // Calcul du total du panier
   const totalPanier = panier.reduce((total, produit) => total + produit.prix, 0);
 
-  // Fonction pour vider le panier
   const viderPanier = () => {
     localStorage.removeItem("panierProduits");
     setPanier([]);
@@ -27,7 +31,6 @@ export default function RecapCommande() {
       <div className="container mt-4">
         <h2 className="text-center">Résumé de votre commande</h2>
 
-        {/* Vérification si le panier est vide */}
         {panier.length === 0 ? (
           <div className="alert alert-warning text-center">
             Votre panier est vide !
@@ -54,14 +57,14 @@ export default function RecapCommande() {
               ))}
             </div>
 
-            <div className="d-flex justify-content-between mt-4">
+            <div className="d-flex justify-content-between mt-4 flex-wrap gap-3">
               <h5>Total : {totalPanier} FCFA</h5>
               <Link
-                    to="/Crypto" 
-                    className="btn btn-primary fs-2 fw-semibold lh-sm"
-                  >
-                    Procéder au paiement
-                  </Link>
+                to="/Crypto"
+                className="btn btn-primary fs-2 fw-semibold lh-sm"
+              >
+                Procéder au paiement
+              </Link>
               <button className="btn btn-danger" onClick={viderPanier}>
                 Vider le panier
               </button>

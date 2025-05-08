@@ -1,44 +1,51 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../contexts/Authcontexts"; // Utilisation du contexte d'authentification
+import { useAuth } from "../contexts/Authcontexts"; // Vérifie que ce fichier est bien en TypeScript aussi
+
+interface User {
+  id: number;
+  email: string;
+  password: string;
+  [key: string]: any; // Pour d'autres propriétés éventuelles
+}
 
 function AuthenticationLogin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // État pour l'erreur
-  const { setUser, setIsAuthenticated } = useAuth(); // Récupérer les méthodes du contexte d'authentification
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const { setUser, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Vérifie la solidité du mot de passe
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(password)) {
-      setErrorMessage("Mot de passe faible : min. 8 caractères, 1 majuscule, 1 chiffre et 1 symbole.");
+      setErrorMessage(
+        "Mot de passe faible : min. 8 caractères, 1 majuscule, 1 chiffre et 1 symbole."
+      );
       return;
     }
 
-    // Vérifie si l'utilisateur existe dans l'API
-    axios.get("/api/users") // Remplacer par l'URL de ton API
-      .then(response => {
+    axios
+      .get<User[]>("/api/users")
+      .then((response) => {
         const users = response.data;
-
-        // Vérification basique : email et mot de passe
-        const userFound = users.find(user => user.email === email && user.password === password);
+        const userFound = users.find(
+          (user) => user.email === email && user.password === password
+        );
 
         if (userFound) {
-          // Sauvegarde l'utilisateur dans le contexte d'authentification
           setUser(userFound);
           setIsAuthenticated(true);
-          localStorage.setItem("user", JSON.stringify(userFound)); // Optionnel : stocke l'utilisateur dans localStorage pour la persistance
+          localStorage.setItem("user", JSON.stringify(userFound));
           navigate("/HomePage");
         } else {
           setErrorMessage("Email ou mot de passe incorrect");
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Erreur API:", error);
         setErrorMessage("Une erreur s’est produite lors de la connexion");
       });
@@ -46,8 +53,15 @@ function AuthenticationLogin() {
 
   return (
     <div className="App">
-      <div className="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed">
+      <div
+        className="page-wrapper"
+        id="main-wrapper"
+        data-layout="vertical"
+        data-navbarbg="skin6"
+        data-sidebartype="full"
+        data-sidebar-position="fixed"
+        data-header-position="fixed"
+      >
         <div className="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
           <div className="d-flex align-items-center justify-content-center w-100">
             <div className="row justify-content-center w-100">
@@ -55,12 +69,18 @@ function AuthenticationLogin() {
                 <div className="card mb-0">
                   <div className="card-body">
                     <div className="text-center py-3 w-100">
-                      <img src="../assets/images/logos/dark-logo.svg" width="180" alt="Logo" />
+                      <img
+                        src="../assets/images/logos/dark-logo.svg"
+                        width="180"
+                        alt="Logo"
+                      />
                     </div>
                     <p className="text-center">Your Social Campaigns</p>
                     <form onSubmit={handleLogin}>
                       <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+                        <label htmlFor="exampleInputEmail1" className="form-label">
+                          Email
+                        </label>
                         <input
                           type="email"
                           className="form-control"
@@ -71,7 +91,9 @@ function AuthenticationLogin() {
                         />
                       </div>
                       <div className="mb-4">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                        <label htmlFor="exampleInputPassword1" className="form-label">
+                          Password
+                        </label>
                         <input
                           type="password"
                           className="form-control"
@@ -88,17 +110,37 @@ function AuthenticationLogin() {
                       )}
                       <div className="d-flex align-items-center justify-content-between mb-4">
                         <div className="form-check">
-                          <input className="form-check-input primary" type="checkbox" id="flexCheckChecked" defaultChecked />
-                          <label className="form-check-label text-dark" htmlFor="flexCheckChecked">
+                          <input
+                            className="form-check-input primary"
+                            type="checkbox"
+                            id="flexCheckChecked"
+                            defaultChecked
+                          />
+                          <label
+                            className="form-check-label text-dark"
+                            htmlFor="flexCheckChecked"
+                          >
                             Remember this Device
                           </label>
                         </div>
-                        <a className="text-primary fw-bold" href="#">Forgot Password?</a>
+                        <a className="text-primary fw-bold" href="#">
+                          Forgot Password?
+                        </a>
                       </div>
-                      <button type="submit" className="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2">Sign In</button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2"
+                      >
+                        Sign In
+                      </button>
                       <div className="d-flex align-items-center justify-content-center">
                         <p className="fs-4 mb-0 fw-bold">New to Alao Service?</p>
-                        <a className="text-primary fw-bold ms-2" href="/AuthenticationRegister">Create an account</a>
+                        <a
+                          className="text-primary fw-bold ms-2"
+                          href="/AuthenticationRegister"
+                        >
+                          Create an account
+                        </a>
                       </div>
                     </form>
                   </div>

@@ -1,28 +1,45 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+// Définir un type pour les erreurs de validation
+interface FormErrors {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
 
 function AuthenticationRegister() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  // État pour les données du formulaire
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     password: ""
   });
 
-  const [errors, setErrors] = useState({});
-  const [apiError, setApiError] = useState("");
+  // État pour les erreurs du formulaire
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  // État pour les erreurs provenant de l'API
+  const [apiError, setApiError] = useState<string>("");
 
   // Gère les changements de champs
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // Validation basique des champs
-  const validate = () => {
-    const newErrors = {};
+  const validate = (): FormErrors => {
+    const newErrors: FormErrors = {};
     if (!formData.name.trim()) newErrors.name = "Le nom est requis.";
     if (!formData.email.includes("@")) newErrors.email = "L'email est invalide.";
     if (formData.password.length < 6) newErrors.password = "Le mot de passe doit contenir au moins 6 caractères.";
@@ -30,8 +47,9 @@ function AuthenticationRegister() {
   };
 
   // Soumission du formulaire
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -41,13 +59,14 @@ function AuthenticationRegister() {
     const confirmation = window.confirm("Voulez-vous vraiment vous inscrire avec ces informations ?");
     if (!confirmation) return;
 
-    // Envoi des données à une fausse API
-    axios.post("https://fakestoreapi.com/users", {
-      username: formData.name,
-      email: formData.email,
-      password: formData.password
-    })
-      .then(response => {
+    // Envoi des données à l'API
+    axios
+      .post("https://fakestoreapi.com/users", {
+        username: formData.name,
+        email: formData.email,
+        password: formData.password
+      })
+      .then((response) => {
         console.log("Inscription réussie :", response.data);
 
         // 🔒 Stockage local après inscription
@@ -61,7 +80,7 @@ function AuthenticationRegister() {
         // 🔁 Redirection après inscription
         navigate("/HomePage");
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Erreur API :", error);
         setApiError("Une erreur est survenue lors de l'inscription. Veuillez réessayer.");
       });
@@ -69,8 +88,15 @@ function AuthenticationRegister() {
 
   return (
     <div className="App">
-      <div className="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed">
+      <div
+        className="page-wrapper"
+        id="main-wrapper"
+        data-layout="vertical"
+        data-navbarbg="skin6"
+        data-sidebartype="full"
+        data-sidebar-position="fixed"
+        data-header-position="fixed"
+      >
         <div className="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
           <div className="d-flex align-items-center justify-content-center w-100">
             <div className="row justify-content-center w-100">
