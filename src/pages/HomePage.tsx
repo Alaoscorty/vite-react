@@ -24,10 +24,10 @@ function HomePage() {
   // Simuler la récupération des ventes par mois
   const fetchSalesData = (month: string) => {
     const data: { [key: string]: number[] } = {
-      "1": [10, 12, 13, 15, 14, 16, 20, 18, 17, 14, 13, 11],
-      "2": [15, 17, 16, 18, 19, 20, 22, 23, 21, 19, 18, 15],
-      "3": [20, 18, 19, 25, 28, 22, 24, 26, 27, 29, 30, 32],
-      "4": [22, 23, 24, 21, 25, 29, 31, 30, 28, 27, 26, 25]
+      "1": [100, 121, 157, 156, 142, 162, 201, 185, 171, 144, 134, 117],
+      "2": [155, 117, 116, 185, 159, 270, 242, 2436, 212, 129, 198, 159],
+      "3": [920, 198, 919, 925, 298, 482, 294, 269, 279, 929, 30, 32],
+      "4": [22, 23, 249, 291, 295, 299, 391, 390, 28, 297, 296, 695]
     };
     setSalesData(data[month] || []);
   };
@@ -47,8 +47,8 @@ function HomePage() {
         label: "Ventes",
         data: salesData,
         fill: true,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)"
+        backgroundColor: "rgba(54, 172, 172, 0.2)",
+        borderColor: "rgb(75, 83, 192)"
       }
     ]
   };
@@ -92,10 +92,10 @@ function HomePage() {
                       value={selectedMonth}
                       onChange={handleMonthChange}
                     >
-                      <option value="1">Mars 2023</option>
-                      <option value="2">Avril 2023</option>
-                      <option value="3">Mai 2023</option>
-                      <option value="4">Juin 2023</option>
+                      <option value="1">Mars 2025</option>
+                      <option value="2">Avril 2025</option>
+                      <option value="3">Mai 2025</option>
+                      <option value="4">Juin 2025</option>
                     </select>
                   </div>
                   <Line data={chartData} options={chartOptions} />
@@ -108,15 +108,15 @@ function HomePage() {
                 <div className="card-body p-4">
                   <h5 className="card-title mb-9 fw-semibold">Yearly Breakup</h5>
                   <div className="d-flex align-items-center justify-content-between">
-                    <h4 className="fw-semibold">$36,358</h4>
-                    <span className="text-success">+9%</span>
+                    <h4 className="fw-semibold">FCFA35358</h4>
+                    <span className="text-success">+19%</span>
                   </div>
                 </div>
               </div>
               <div className="card mt-3">
                 <div className="card-body">
                   <h5 className="card-title mb-9 fw-semibold">Monthly Earnings</h5>
-                  <h4 className="fw-semibold">$6,820</h4>
+                  <h4 className="fw-semibold">FCFA 690820</h4>
                   <span className="text-danger">-5%</span>
                 </div>
               </div>

@@ -120,7 +120,9 @@ const SideBars: React.FC = () => {
                   to="/chat"
                   className="btn btn-primary fs-2 fw-semibold lh-sm"
                 >
-                  Chat
+                  Chat <span>
+                  <i className="ti ti-send" style={{fontSize:"17px", marginLeft:"5px"}}></i>
+                  </span>
                 </Link>
               </div>
               <div className="unlimited-access-img">

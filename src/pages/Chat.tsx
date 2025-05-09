@@ -26,7 +26,7 @@ function Chat() {
       return "Vous pouvez parrainer en copiant le lien qui s'affiche sur votre page de parrainage";
     } else if (userMessage.toLowerCase().includes("mobile money")) {
       return "Pour payer par mobile money, vous pouvez utiliser la section 'Payer par crypto' ou envoyez l'argent sur le +2290151563219. N'oubliez pas de faire une capture d'écran et d'envoyez sur le numéro afin de confirmer votre payement, le temps que nous mettons à disposition de nos clients une facture en ligne";
-    } else if (userMessage.toLowerCase().includes("réservations")) {
+    } else if (userMessage.toLowerCase().includes("réservation")) {
       return "A propos de la réservation, vous pouvez contactez directement un agent ou employé si vous ne parvenez toujours pas à faire votre réseravtion";
     }
      else {
@@ -101,8 +101,10 @@ function Chat() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
-          <button className="btn btn-success" onClick={handleSend}>
-            Envoyer
+          <button className="btn btn-success" onClick={handleSend} style={{display:"flex", alignItems:"center"}}>
+            Envoyer <span>
+                  <i className="ti ti-send" style={{fontSize:"17px", marginLeft:"5px"}}></i>
+                  </span>
           </button>
         </div>
       </div>
