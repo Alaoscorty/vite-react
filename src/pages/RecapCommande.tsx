@@ -29,7 +29,7 @@ export default function RecapCommande() {
   return (
     <Layout>
       <div className="container mt-4">
-        <h2 className="text-center">Résumé de votre commande</h2>
+        <h2 className="text-center mb-4">Résumé de votre commande</h2>
 
         {panier.length === 0 ? (
           <div className="alert alert-warning text-center">
