@@ -1,23 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "vite.config.js",
-      "use": "@vercel/static-build"
-    }
-  ],
+  "buildsCommand":"npm run build",
+  "outDirectory":"dist",
   "routes": [
     {
-      "src": "/",
-      "dest": "/"
-    }
-    {
-      "src": "/Reservations",
-      "dest": "/"
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
