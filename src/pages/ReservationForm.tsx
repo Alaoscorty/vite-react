@@ -99,7 +99,7 @@ export default function ReservationForm() {
 
   return (
     <Layout>
-      <div className="mt-4" style={{ width: "130vh", marginLeft: "10vh" }}>
+      <div className="mt-4" style={{ width: "100%", marginLeft: "10px" }}>
         <div className="p-3">
           <h2 className="text-center mb-4 text-primary">Prendre une réservation</h2>
 

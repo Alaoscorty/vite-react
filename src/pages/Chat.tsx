@@ -18,9 +18,20 @@ function Chat() {
       return "Vous pouvez commander un produit depuis la page Produits.";
     } else if (userMessage.toLowerCase().includes("crypto")) {
       return "Pour payer en crypto, utilisez la section 'Payer par crypto'.";
-    } else {
-      return "Je suis désolé, je n'ai pas compris votre demande.";
+    } else if (userMessage.toLowerCase().includes("salut")) {
+      return "Salut, comment je peux vous aider aujourd'hui ?";
+    } else if (userMessage.toLowerCase().includes("Bonjour")) {
+      return "Salut, comment je peux vous aider aujourd'hui ?";
+    } else if (userMessage.toLowerCase().includes("Parrainage")) {
+      return "Vous pouvez parrainer en copiant le lien qui s'affiche sur votre page de parrainage";
+    } else if (userMessage.toLowerCase().includes("mobile money")) {
+      return "Pour payer par mobile money, vous pouvez utiliser la section 'Payer par crypto' ou envoyez l'argent sur le +2290151563219. N'oubliez pas de faire une capture d'écran et d'envoyez sur le numéro afin de confirmer votre payement, le temps que nous mettons à disposition de nos clients une facture en ligne";
+    } else if (userMessage.toLowerCase().includes("réservations")) {
+      return "A propos de la réservation, vous pouvez contactez directement un agent ou employé si vous ne parvenez toujours pas à faire votre réseravtion";
     }
+     else {
+      return "Je suis désolé, je n'ai pas compris votre demande.Veillez reformuler ";
+    } 
   };
 
   // Fonction pour envoyer le message
