@@ -113,6 +113,84 @@ const produitsExemple: Produit[] = [
     description: "5 outils inclus",
     image: "images/voilebutton.jpg",
   },
+  {
+    id: 16,
+    nom: "Pack de nouvelles hijab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/hijab.jpg",
+  },
+  {
+    id: 17,
+    nom: "Pack de nouvelles hijab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/hijab1.jpg",
+  },
+  {
+    id: 18,
+    nom: "Pack de nouvelles hijab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/hijab3.jpg",
+  },
+  {
+    id: 19,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jabfemme.jpg",
+  },
+  {
+    id: 20,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jilbab.jpg",
+  },
+  {
+    id: 21,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jilbab1.jpg",
+  },
+  {
+    id: 22,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jilbab2.jpg",
+  },
+  {
+    id: 23,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jilbab3.jpg",
+  },
+  {
+    id: 24,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jilbab4.jpg",
+  },
+  {
+    id: 25,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jilbab5.jpg",
+  },
+  {
+    id: 26,
+    nom: "Pack de nouvelles jilbab",
+    prix: 5000,
+    description: "5 outils inclus",
+    image: "images/jilbab6.jpg",
+  },
+  
 ];
 
 export default function ProduitsDisponibles({ onAjouterProduit }: ProduitsDisponiblesProps) {
@@ -175,8 +253,8 @@ export default function ProduitsDisponibles({ onAjouterProduit }: ProduitsDispon
       </Link>
 
       <div className="container mt-4">
-        <h2 className="text-center">Produits disponibles</h2>
-        <div className="row">
+        <h2 className="text-center mb-4">Produits disponibles</h2>
+        <div className="row w-100">
           {produitsAffiches.map((produit) => (
             <div className="col-md-4 mb-3" key={produit.id}>
               <div className="card h-100">
