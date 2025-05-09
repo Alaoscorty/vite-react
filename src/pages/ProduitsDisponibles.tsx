@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
-import { Produit } from "../types/produit"; // Assurez-vous que 'Produit' est correctement importé
+import { Produit } from "../types/Produit"; // Assurez-vous que 'Produit' est correctement importé
 
 interface ProduitsDisponiblesProps {
   onAjouterProduit?: (produit: Produit) => void;

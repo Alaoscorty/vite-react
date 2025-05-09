@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProduitsDisponibles from "../pages/ProduitsDisponibles";
 import { useNavigate } from "react-router-dom";
-import { Produit } from "../types/produit"; // Importation de 'Produit'
+import { Produit } from "../types/Produit"; // Importation de 'Produit'
 
 // 👉 Typage d'un produit (ici on utilise la même interface partout)
 interface Produit {

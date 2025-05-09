@@ -1,12 +1,16 @@
-// api/ReservationService.ts
+
 import axios from 'axios';
+import { Reservation } from '../types/Reservation'; // si tu places l'interface ailleurs
 
 const API_URL = 'http://localhost:5000/reservations';
 
-export const createReservation = (data: any) => axios.post(API_URL, data);
+// Typage du paramètre 'data'
+export const createReservation = (data: Reservation) => axios.post(API_URL, data);
 
-export const fetchReservations = () => axios.get(API_URL);
+// Typage du retour
+export const fetchReservations = () => axios.get<Reservation[]>(API_URL);
 
-export const getUserReservations = (userId: string | number) => {
-  return axios.get(`/api/reservations?userId=${userId}`);
+// Récupération des réservations d'un utilisateur spécifique
+export const getUserReservations = (userId: string) => {
+  return axios.get<Reservation[]>(`${API_URL}?userId=${userId}`);
 };
