@@ -29,6 +29,11 @@ function Chat() {
     } else if (userMessage.toLowerCase().includes("réservation")) {
       return "A propos de la réservation, vous pouvez contactez directement un agent ou employé si vous ne parvenez toujours pas à faire votre réseravtion";
     }
+    else if (userMessage.toLowerCase().includes("commande")) {
+      return "Au cas ou, vous avez des commandes à faire, vous pouvez passez directement en contactant le +22951563219 ou en laissant directement un message sur whatsapp en cliquanr le https//:wa.me/+22951563219 )";
+    }else if (userMessage.toLowerCase().includes("réservation")) {
+      return "A propos de la réservation, vous pouvez contactez directement un agent ou employé si vous ne parvenez toujours pas à faire votre réseravtion";
+    }
      else {
       return "Je suis désolé, je n'ai pas compris votre demande.Veillez reformuler ";
     } 

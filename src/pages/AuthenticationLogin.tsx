@@ -66,11 +66,11 @@ function AuthenticationLogin() {
           <div className="d-flex align-items-center justify-content-center w-100">
             <div className="row justify-content-center w-100">
               <div className="w-100">
-                <div className="card mb-0">
+                <div className="card mb-0 ">
                   <div className="card-body">
                     <div className="text-center py-3 w-100">
                       <img
-                        src="../assets/images/logos/dark-logo.svg"
+                        src="../assets/images/logos/alao.png"
                         width="180"
                         alt="Logo"
                       />
