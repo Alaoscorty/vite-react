@@ -21,7 +21,7 @@ function Chat() {
     } else if (userMessage.toLowerCase().includes("salut")) {
       return "Salut, comment je peux vous aider aujourd'hui ?";
     } else if (userMessage.toLowerCase().includes("Bonjour")) {
-      return "Salut, comment je peux vous aider aujourd'hui ?";
+      return "Bonjour, comment je peux vous aider aujourd'hui ?";
     } else if (userMessage.toLowerCase().includes("Parrainage")) {
       return "Vous pouvez parrainer en copiant le lien qui s'affiche sur votre page de parrainage";
     } else if (userMessage.toLowerCase().includes("mobile money")) {
