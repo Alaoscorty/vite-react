@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../contexts/Authcontexts"; // Vérifie que ce fichier est bien en TypeScript aussi
+import { useAuth } from "../contexts/Authcontexts";
 
 interface User {
   id: number;
