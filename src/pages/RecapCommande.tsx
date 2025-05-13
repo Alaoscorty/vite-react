@@ -61,9 +61,11 @@ export default function RecapCommande() {
               <h5>Total : {totalPanier} FCFA</h5>
               <Link
                 to="/Crypto"
-                className="btn btn-primary fs-2 fw-semibold lh-sm"
+                className="btn btn-primary fs-2 fw-semibold lh-sm d-flex align-item-center" 
               >
-                Procéder au paiement
+                Procéder au paiement <span style={{paddingTop:"-8px"}}>
+                  <i className="ti ti-car" style={{fontSize:"18px", marginLeft:"5px"}}></i>
+                  </span>
               </Link>
               <button className="btn btn-danger" onClick={viderPanier}>
                 Vider le panier

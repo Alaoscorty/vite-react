@@ -106,7 +106,7 @@ function Chat() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
-          <button className="btn btn-success" onClick={handleSend} style={{display:"flex", alignItems:"center"}}>
+          <button className="btn btn-success " onClick={handleSend} style={{display:"flex", alignItems:"center"}}>
             Envoyer <span>
                   <i className="ti ti-send" style={{fontSize:"17px", marginLeft:"5px"}}></i>
                   </span>
