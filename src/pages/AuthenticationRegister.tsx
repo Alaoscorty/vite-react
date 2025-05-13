@@ -78,7 +78,7 @@ function AuthenticationRegister() {
         localStorage.setItem("user", JSON.stringify(userInfo));
 
         // 🔁 Redirection après inscription
-        navigate("/HomePage");
+        navigate("/Reservations");
       })
       .catch((error) => {
         console.error("Erreur API :", error);
